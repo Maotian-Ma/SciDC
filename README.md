@@ -21,24 +21,30 @@ This is the source code for paper:
 Scientific Knowledge-driven Decoding Constraints Improving the Reliability of LLMs
 
 ## 📖 Overview
-SciDC is a novel framework that integrates subject-specific scientific knowledge with multi-layered decoding constraints to improve the reliability of large language models in specialized domains. By leveraging general LLMs (e.g., Claude-3.5-Sonnet) to automatically transform flexible knowledge into standardized rules at three granularities (top-layer for reasoning sequences, middle-layer for conditional logic, and bottom-layer for token-level constraints), SciDC enables locally-deployed domain models to generate outputs that strictly adhere to scientific principles while maintaining data privacy. Experiments across industrial formulation design, clinical tumor diagnosis, and chemical retrosynthesis planning demonstrate consistent effectiveness, achieving an average 12% accuracy improvement compared to vanilla generation methods.
-
-
-
 
 <p align="center"><img src="scidc.png" width="50%"></p>
 
+SciDC is a novel framework that integrates subject-specific scientific knowledge with multi-layered decoding constraints to improve the reliability of large language models in specialized domains. By leveraging general LLMs (e.g., Claude-3.5-Sonnet) to automatically transform flexible knowledge into standardized rules at three granularities (top-layer for reasoning sequences, middle-layer for conditional logic, and bottom-layer for token-level constraints), SciDC enables locally-deployed domain models to generate outputs that strictly adhere to scientific principles while maintaining data privacy. Experiments across industrial formulation design, clinical tumor diagnosis, and chemical retrosynthesis planning demonstrate consistent effectiveness, achieving an average 12% accuracy improvement compared to vanilla generation methods.
+
 
 ## ⚙️ Setup
-这里是setup部分用于部署环境，下载代码或数据等准备操作。
+
+### Environment
+
 ```bash
-conda create --name xxx python==3.11
-conda activate xxx
-git clone https://github.com/xxx.git
-cd xxx
-pip install -r requirement.txt
-...
+# Create conda environment
+conda create --name scidc python==3.11
+conda activate scidc
+
+# Clone repository
+git clone https://github.com/Maotian-Ma/SciDC.git
+cd SciDC
+
+# Install dependencies
+pip install -r requirements.txt
 ```
+
+
 
 ## 🔧 Reproduction Guide/Training/Method...
 
