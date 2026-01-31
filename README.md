@@ -43,18 +43,69 @@ cd SciDC
 pip install -r requirements.txt
 ```
 
+### Dependencies
+```
+torch>=2.0.0
+vllm>=0.4.0
+transformers>=4.40.0
+openai>=1.0.0
+```
 
 
 ## 🔧 Reproduction Guide
 
+### 1. Configure API Settings
 
-### 1. 设置参数
+Edit `config.py` to set your GLLM API credentials:
 
-在 config.py 中修改相应的参数。
+```python
+# GLLM Configuration (for CoT & Constraint Code Generation)
+API_KEY = 'your-api-key-here'
+API_BASE_URL = 'https://api.anthropic.com/v1'  # or your API endpoint
+API_MODEL = 'claude-3-5-sonnet-20241022'
+```
 
-### 2. 执行代码
+### 2. Set Local Model Path
 
-执行 run_pipeline.py 执行流程
+```python
+# DLLM Configuration (Local Model for Constrained Generation)
+DLLM_MODEL_PATH = "/path/to/your/local/model"  # e.g., Qwen2.5-7B-Instruct
+```
+
+### 3. Define Domain Knowledge
+
+Create your domain knowledge document in `prompts/domain_knowledge.txt`:
+
+```text
+# Example: TNM Staging Knowledge:
+
+- T (tumor, primary tumor) staging types include:
+- Tx: Primary tumor cannot be assessed
+- T0: No evidence of primary tumor
+- T1: Tumor maximum diameter ≤ 2cm, confined to the thyroid gland
+    - T1a: Tumor maximum diameter ≤ 1cm, confined to the thyroid gland
+    - T1b: 1cm < tumor maximum diameter ≤ 2cm, confined to the thyroid gland
+- T2: 2cm < tumor maximum diameter ≤ 4cm, confined to the thyroid gland
+- T3: Tumor maximum diameter > 4cm and confined to the thyroid gland, or gross extrathyroidal invasion involving only the band muscles
+    - T3a: Tumor maximum diameter > 4cm, confined to the thyroid gland
+...
+```
+
+### 4. Define Your Task
+
+```python
+# In config.py
+USER_TASK = "domain-specific task" #e.g. Determine the TNM staging of the patient's tumor for the following case.
+```
+
+### 5. Run the Pipeline
+
+```bash
+python run_pipeline.py
+```
+
+---
+
 
 
 ## 📁 Repository Structure
@@ -76,15 +127,12 @@ SciDC/
         └── constrained_executor.py
 ```
 
-## 📄 Acknowledgement 
-
 
 ## 🥰 Citation
-引用链接
 ```
-@article{chen2025ultrarag,
-  title={UltraRAG: A Modular and Automated Toolkit for Adaptive Retrieval-Augmented Generation},
-  author={Chen, Yuxuan and Guo, Dewen and Mei, Sen and Li, Xinze and Chen, Hao and Li, Yishan and Wang, Yixuan and Tang, Chaoyue and Wang, Ruobing and Wu, Dingjun and others},
+@article{,
+  title={Scientific Knowledge-driven Decoding Constraints Improving the Reliability of LLMs},
+  author={Maotian Ma, Zheni Zeng, Zhenghao Liu, Yukun Yan},
   journal={xxx},
   year={2026}
 }
@@ -92,8 +140,7 @@ SciDC/
 
 
 ## 📧 Contact
-这里是联系方式
 If you have questions, suggestions, and bug reports, please email:
 ```
-xxx.com
+2022113389@stu.hit.edu.cn
 ```
