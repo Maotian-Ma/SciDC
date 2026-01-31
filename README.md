@@ -17,6 +17,7 @@ Yukun Yan<sup>2</sup>,
 </div>
 
 This is the source code for paper:
+
 Scientific Knowledge-driven Decoding Constraints Improving the Reliability of LLMs
 
 ## 📖 Overview
@@ -112,19 +113,26 @@ python run_pipeline.py
 
 ```
 SciDC/
-├── README.md
-├── requirements.txt
-├── prompts                    # Prompts for cot/code generation & Domain knowledge document
-├── config.py                  # Edit your config here
+├── README.md                          # This file
+├── requirements.txt                   # Python dependencies
+├── config.py                          # Global configuration
+├── run_pipeline.py                    # Main execution entry point
+├── cases_data                         # Examples in different domains
+├── prompts/                           # Prompt templates & domain knowledge
+│   ├── domain_knowledge.txt           # Domain-specific knowledge document
+│   ├── task_decomposition.txt         # CoT generation prompt template
+│   └── code_generation.txt            # Constraint code generation prompt
+│
 └── src/
-    ├── gllm                   # Generate constrained code with GLLM
+    ├── gllm/                          # General LLM module (Cloud API)
+    │   ├── __init__.py
+    │   ├── api_client.py              # API communication utilities
+    │   └── code_generator.py          # CoT & constraint code generation
+    │
+    └── dllm/                          # Domain LLM module (Local Execution)
         ├── __init__.py
-        ├── api_client.py
-        └── code_generator.py
-    └── dllm                   # Execute code with DLLM
-        ├── __init__.py
-        ├── dllm.py
-        └── constrained_executor.py
+        ├── dllm.py                    # SciDC core class implementation
+        └── constrained_executor.py    # Constraint code execution engine
 ```
 
 

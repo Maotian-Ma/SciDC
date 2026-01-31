@@ -1,0 +1,42 @@
+Chemical reactions are categorised into ten classes:
+
+1. Heteroatom Alkylation and Arylation
+   - Definition: Formation of a bond between a heteroatom (O, N, S) and an sp³ carbon or aromatic ring
+   - Identification Features: Presence of Ether (R-O-R), Amine (R-N-R), or Thioether (R-S-R) structures in the target molecule
+   - Cleavage Point: Single bond between heteroatom and carbon atom
+   - Typical Reactions: SN2 reactions, Williamson ether synthesis, reductive amination, Buchwald-Hartwig coupling
+2. Acylation and Related Processes
+   - Definition: Introduction of an acyl group (R-CO-) onto a heteroatom or carbon atom
+   - Identifying Features: Presence of Amide (R-CO-NR'), Ester (R-CO-OR'), Urea, Carbamate structures in the target molecule
+   - Cleavage point: Bond between carbonyl carbon (C=O) and heteroatom (N, O)
+   - Typical reactions: Amide condensation, esterification, isocyanate addition
+3. C−C Bond Formation
+   - Definition: Core reaction for constructing molecular skeletons by linking two carbon atoms
+   - Identifying Features: Linking aromatic rings to side chains, double bond positions
+   - Typical Reactions: Suzuki-Miyaura, Sonogashira, Heck, Grignard reactions, Aldol condensation
+4. Heterocycle Formation
+   - Definition: Constructing ring systems containing heteroatoms (N, O, S) via cyclisation reactions
+   - Identifying features: Heterocyclic structures such as pyridine, pyrimidine, indole, imidazole, isoxazole, thiophene, etc.
+   - Strategy: Identify linear precursors for synthesising the ring system
+5. Protections
+   - Definition: Temporarily shielding the reactivity of specific functional groups
+   - Common groups: Boc, Cbz, Fmoc (amines); TBS, TBDPS, Bn, MOM (alcohols/phenols)
+6. Deprotections
+   - Definition: Removal of protecting groups to release reactive functionalities
+   - Identification features: Free -OH, -NH, -COOH groups in the target product
+7. Reductions
+   - Definition: Lowering the molecular oxidation state (hydrogenation or deoxygenation)
+   - Identification features: Alcohols (from ketones/aldehydes), amines (from nitro/nitrile groups), saturated bonds (from alkenes/alkynes)
+8. Oxidations
+   - Definition: Increasing the oxidation state of a molecule (dehydrogenation or oxygenation)
+   - Identification features: Carboxylic acids (from alcohols/aldehydes), ketones/aldehydes (from alcohols), epoxides (from alkenes)
+9. Functional Group Interconversion (FGI)
+   - Definition: Conversion of one functional group to another without altering the carbon skeleton
+   - Typical reactions: R-OH → R-Cl (Appel reaction), R-X → R-N3
+10. Functional Group Addition (FGA)
+    - Definition: Introduction of a new functional group at a position originally bearing only a C-H bond
+    - Typical reactions: Halogenation, nitration, sulphonation of aromatic rings
+
+
+Additionally, you can now invoke 'retrosynthesis(products)' to perform template matching on the target product, returning five candidate reaction templates.
+

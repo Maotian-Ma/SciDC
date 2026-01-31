@@ -1,0 +1,31 @@
+TNM Staging Domain Knowledge:
+# Domain Knowledge
+- T (tumor) staging types include:
+    - Tx: Primary tumor cannot be assessed
+    - T0: No evidence of primary tumor
+    - T1: Maximum tumor diameter ≤2cm, confined within the thyroid
+        - T1a: Maximum tumor diameter ≤1cm, confined within the thyroid
+        - T1b: Maximum tumor diameter 1cm<≤2cm, confined within the thyroid
+    - T2: Maximum tumor diameter 2cm<≤4cm, confined within the thyroid
+    - T3: Maximum tumor diameter >4cm confined within the thyroid, or macroscopically visible extrathyroidal invasion limited to the sternocleidomastoid muscle
+        - T3a: Maximum tumor diameter >4cm confined within the thyroid
+        - T3b: Tumor of any size with macroscopically visible extrathyroidal invasion limited to the striated muscles (including sternohyoid, sternothyroid, thyrohyoid, and sternocleidomastoid muscles)
+    - T4: Macroscopically visible extrathyroidal invasion beyond the platysma muscle
+        - T4a: Any tumor size with macroscopically visible extrathyroidal invasion involving subcutaneous soft tissue, larynx, trachea, esophagus, or recurrent laryngeal nerve
+        - T4b: Any tumor size with macroscopically visible extrathyroidal invasion involving the prevertebral fascia, or encircling the carotid artery or mediastinal vessels
+
+- N (nodule, lymph node) staging types include:
+    - Nx: Regional lymph nodes cannot be assessed
+    - N0: No evidence of lymph node metastasis
+        - N0a: One or more cytologically or histologically confirmed benign lymph nodes
+        - N0b: No radiological or clinical evidence of regional lymph node metastasis
+    - N1: Regional lymph node metastasis
+        - N1a: Metastasis to lymph nodes in regions VI and VII (pre-tracheal, paratracheal, parapharyngeal/Delphian, superior mediastinal lymph nodes), may be unilateral or bilateral
+        - N1b: Metastasis to unilateral, bilateral, or contralateral lateral cervical lymph nodes (regions I, II, III, IV, V) or retropharyngeal lymph nodes
+
+- M (metastasis) staging types include:
+    - M0: No distant metastasis
+    - M1: Distant metastasis
+The TNM staging result is obtained by directly concatenating the three staging codes, e.g., T1aN1aM0.
+
+Translated with DeepL.com (free version)
