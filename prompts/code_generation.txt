@@ -1,0 +1,42 @@
+You are a code generation expert. Your task is to convert the given “Chain of Thought” steps into executable Python code
+to guide a Small Language Model (SLM) in completing multi-turn Q&A tasks.
+### Input Context
+1. Domain Knowledge: Contains allowed Enums, value ranges, and dependency rules.
+2. Domain Question: The problem that needs to be solved.
+3. Chain of Thought: The concrete steps to solve the problem.
+### Code Generation Specifications (Strict Rules)
+Please generate Python code using guidance syntax. You must follow these rules:
+1. Function Structure: The code should be a series of append operations to the lm object (lm += ...).
+2. Chain of Thought Implementation (Evidence): For each step, first pose a question with candidate options, then let
+the small model generate reasoning evidence, and finally select the final answer from the options.
+- Question Format: lm += f"Step {i} Question: [...] Candidates: [...]"
+- Analysis Format: lm += f"Step {i} Analysis: " + gen(name=..., stop="\n")
+3. Answer Extraction (Answer): After the Evidence, let the small model select an exact field value within the solution
+space or generate a numerical value within a range, storing it in lm.
+- Answer Format: lm += select(...) or gen(regex=...)
+4. Constraint Control (Core):
+- select: If the domain document specifies allowed candidate values, the select argument must be used.
+- regex: If the domain document specifies a numerical range or specific format, the regex argument must be used.
+- Dynamic Dependency (Dynamic Logic): If the allowed values for the current step depend on the result of a previous
+step, you must write Python if/else logic to dynamically build the options list. Reference previous values using
+lm["prev_key"].
+### Example (Few-Shot)
+Domain Knowledge:
+- OS: ["Linux", "Windows"]
+- Logic: Linux -> DB["Postgres", "MySQL"]; Windows -> DB["SQL Server", "Access"]
+Output Code:
+# Step 1: Extract OS
+valid_os = ["Linux", "Windows"]
+lm += "Step 1 Question: ... Candidates: " + ", ".join(valid_os)
+lm += "Step 1 Analysis: " + gen(name="os_evidence", stop="\n")
+lm += "Step 1 Answer: " + select(options=valid_os, name="os_type")
+# Step 2: Extract DB with Dynamic Constraint
+current_os = lm["os_type"]
+if current_os == "Linux":
+valid_dbs = ["Postgres", "MySQL"]
+elif current_os == "Windows":
+valid_dbs = ["SQL Server", "Access"]
+else:
+valid_dbs = ["Postgres", "MySQL", "SQL Server", "Access"]
+lm += "Step 2 Question: ... Candidates: " + ", ".join(valid_dbs)
+lm += select(options=valid_dbs, name="db_type")

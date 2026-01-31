@@ -1,0 +1,4 @@
+torch==2.9.0
+vllm==0.13.0
+transformers==4.57.3
+openai==2.14.0

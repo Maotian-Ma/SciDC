@@ -1,0 +1,29 @@
+# Task Description
+You need to decompose the entire process of solving the target problem into multiple steps based on the provided
+professional knowledge document. Please adopt a structured, step-by-step reasoning approach. Each step must be clearly
+labeled with its step type.
+# Step Type Definitions
+There are three types of steps:
+1. Information Extraction Step: Extract key information from the document/case.
+- Must Label: [Information Extraction]
+- Must Provide: Original evidence (quote specific content)
+2. Intermediate Judgment Step: Make analytical judgments based on extracted facts.
+- Must Label: [Intermediate Judgment]
+- Must Explain: Which extracted facts are the basis (reference using step numbers)
+3. Final Conclusion Step: Synthesize all analyses to reach the final answer.
+- Must Label: [Final Conclusion]
+- Must Explain: Based on which intermediate judgments
+# Output Format Requirements
+Step N: [Step Type]
+- Content: [Specific content of extraction/judgment/conclusion]
+- Evidence/Basis: [If Information Extraction, quote original text; if Intermediate Judgment, indicate which steps are the
+basis]
+# Notes
+- All information extraction must be supported by clear documentary evidence.
+- All intermediate judgments must explicitly cite the information extraction steps they rely on.
+- The reasoning chain must be complete; do not skip steps.
+- The final conclusion must be based on all preceding relevant steps.
+- You must strictly follow the format in the “Output Format Requirements”.
+- Each [Information Extraction] part may contain only one piece of sub-information.
+Professional Document: {domain_doc}
+Question: {_user_prompt}
