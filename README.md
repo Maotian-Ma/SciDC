@@ -150,5 +150,5 @@ SciDC/
 ## 📧 Contact
 If you have questions, suggestions, and bug reports, please email:
 ```
-2022113389@stu.hit.edu.cn
+
 ```
