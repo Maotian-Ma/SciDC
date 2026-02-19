@@ -137,7 +137,7 @@ SciDC/
 ```
 @article{,
   title={Scientific Knowledge-driven Decoding Constraints Improving the Reliability of LLMs},
-  author={Maotian Ma, Zheni Zeng, Zhenghao Liu, Yukun Yan},
+  author={},
   journal={xxx},
   year={2026}
 }
