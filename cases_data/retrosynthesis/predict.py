@@ -11,7 +11,7 @@ from aizynthfinder.aizynthfinder import AiZynthExpander  # , AiZynthFinder
 filename = "cases_data/retrosynthesis/public_data/config.yml"
 
 def retrosynthesis(products):
-    filename = "/data/home/yxzhou/ys/mmt/SciDC/retro_plan/public_data/config.yml"
+    filename = "config.yml"
     expander = AiZynthExpander(configfile=filename)
     expander.expansion_policy.select("uspto")
     reactions = expander.do_expansion(products)
