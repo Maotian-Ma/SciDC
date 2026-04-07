@@ -1,29 +1,186 @@
-# Task Description
-You need to decompose the entire process of solving the target problem into multiple steps based on the provided
-professional knowledge document. Please adopt a structured, step-by-step reasoning approach. Each step must be clearly
-labeled with its step type.
-# Step Type Definitions
-There are three types of steps:
-1. Information Extraction Step: Extract key information from the document/case.
-- Must Label: [Information Extraction]
-- Must Provide: Original evidence (quote specific content)
-2. Intermediate Judgment Step: Make analytical judgments based on extracted facts.
-- Must Label: [Intermediate Judgment]
-- Must Explain: Which extracted facts are the basis (reference using step numbers)
-3. Final Conclusion Step: Synthesize all analyses to reach the final answer.
-- Must Label: [Final Conclusion]
-- Must Explain: Based on which intermediate judgments
-# Output Format Requirements
-Step N: [Step Type]
-- Content: [Specific content of extraction/judgment/conclusion]
-- Evidence/Basis: [If Information Extraction, quote original text; if Intermediate Judgment, indicate which steps are the
-basis]
-# Notes
-- All information extraction must be supported by clear documentary evidence.
-- All intermediate judgments must explicitly cite the information extraction steps they rely on.
-- The reasoning chain must be complete; do not skip steps.
-- The final conclusion must be based on all preceding relevant steps.
-- You must strictly follow the format in the “Output Format Requirements”.
-- Each [Information Extraction] part may contain only one piece of sub-information.
-Professional Document: {domain_doc}
-Question: {_user_prompt}
+# Role Definition
+You are an expert in reasoning framework design. Your task is:
+Given a knowledge document [DOC] and a description of a problem class [Q],
+design a general-purpose Chain-of-Thought Framework (CoT Framework)
+that describes the standard reasoning path for solving this class of problems.
+
+This framework does not target any specific case. It is a reusable solution blueprint that:
+- Defines WHAT variables need to be extracted from any concrete problem instance
+- Defines WHAT intermediate conclusions need to be derived and WHICH prior variables they depend on
+- Defines HOW the final answer is inferred from the above variables and intermediate conclusions
+
+---
+
+# Input Format
+[DOC]: A knowledge document defining the rules, constraints, standards, or background
+       knowledge required to solve the problem.
+[Q]:   A description of a CLASS of problems (not a specific case), outlining the typical
+       structure and objective of such problems.
+
+---
+
+# Framework Step Specification
+
+Every step you design must belong to exactly one of the following three types:
+
+**Type 1 · Information Extraction Step (Extract)**
+- Goal: Define the variables that must be identified and extracted from any concrete
+  instance of this problem class.
+- Requirements:
+  - Assign a named variable to each item to be extracted (e.g., VAR_Amount, VAR_ApprovalStatus).
+  - Describe the meaning of the variable and its possible value domain or data type.
+  - Specify the extraction source: from [DOC] (fixed values / thresholds defined by the document)
+    or from the problem instance (values that vary across cases).
+- Format:
+  `[Extract] Variable: <VAR_xxx>`
+  `Meaning: <what this variable represents>`
+  `Source: <Document / Problem Instance>`
+  `Domain/Type: <enumeration | numeric range | boolean | text | etc.>`
+
+**Type 2 · Intermediate Judgment Step (Judge)**
+- Goal: Define an intermediate conclusion or intermediate value that must be derived,
+  and describe its inference logic.
+- Requirements:
+  - Assign a named variable to the intermediate conclusion (e.g., MID_AmountCompliant).
+  - Explicitly state the derivation logic (conditional expression / rule mapping / comparison).
+  - Explicitly list all variables this step depends on — must be VAR_ or MID_ variables
+    already defined in prior steps.
+- Format:
+  `[Judge] Intermediate Conclusion: <MID_xxx>`
+  `Inference Logic: <if VAR_xx meets condition → Outcome A; otherwise → Outcome B>`
+  `Depends On: <VAR_xxx, MID_xxx, ...>`
+
+**Type 3 · Final Conclusion Step (Conclude)**
+- Goal: Define how the final answer is derived.
+- Requirements:
+  - Explicitly list all variables depended upon (both VAR_ and MID_).
+  - Describe the synthesis logic — how these variables jointly produce the final answer.
+  - Describe the form of the final answer (e.g., yes/no judgment | numeric value |
+    classification label | textual explanation).
+  - If edge cases exist that are not covered by the document, specify a fallback handling rule.
+- Format:
+  `[Conclude] Final Answer: <ANS_xxx>`
+  `Synthesis Logic: <description of how MID_xx and VAR_xx are combined to reach the answer>`
+  `Depends On: <VAR_xxx, MID_xxx, ...>`
+  `Answer Form: <output type and format of the answer>`
+  `Fallback Rule: <how to handle cases where information is insufficient or not covered>`
+
+---
+
+# Output Format
+
+## Problem Class Understanding
+<Summarize in 2–3 sentences the core structure of the problem class described by [Q]:
+what the input is, what the goal is, and where the key difficulty lies.>
+
+## Reasoning Framework
+
+Step 1: [Extract] ...
+Step 2: [Extract] ...
+Step 3: [Judge]   ...
+Step 4: [Judge]   ...
+...
+Step N: [Conclude] ...
+
+## Variable Dependency Graph (Text)
+<Use indentation or arrows to illustrate the dependency relationships among all variables.>
+VAR_A ──┐
+VAR_B ──┼──→ MID_C ───┐
+VAR_D ──┘             ├──→ ANS_FinalAnswer
+MID_E ────────────────┘
+
+---
+
+# Constraints & Notes
+
+1. **Framework Generality**: Steps must not contain any specific values or case-specific content.
+   Use only variable names and logical descriptions.
+2. **Variable Completeness**: Before entering the judgment phase, all variables required
+   by any judgment step must already be defined in prior extraction steps.
+3. **Explicit Dependencies**: Every judgment step must list the prior variables it depends on.
+   Implicit dependencies are not allowed.
+4. **Faithful to Document**: All inference logic and conclusion rules must originate from [DOC].
+   Do not introduce rules not mentioned in the document.
+5. **Single Conclusion**: There must be exactly one Conclude step, placed at the end of
+   the framework.
+
+---
+
+# Example
+
+[DOC]: Employees may submit travel expense reimbursements only if ALL of the following
+       conditions are met:
+       ① The business trip approval form has been signed;
+       ② The single reimbursement amount does not exceed 500 yuan;
+       ③ Original invoices must be attached.
+
+[Q]:   Describes a class of problems — given information about an employee's reimbursement
+       application, determine whether the application meets the reimbursement requirements.
+
+---
+
+## Problem Class Understanding
+The input to this problem class is a description of an employee's specific reimbursement
+application. The goal is to determine whether the application should be approved.
+The core difficulty lies in verifying multiple parallel necessary conditions as defined by the
+document — if any single condition fails, the entire application is rejected.
+
+## Reasoning Framework
+
+Step 1: [Extract] Variable: VAR_ApprovalStatus
+        Meaning: Whether the business trip approval form for this application has been signed
+        Source: Problem Instance
+        Domain/Type: Boolean (Signed / Not Signed)
+
+Step 2: [Extract] Variable: VAR_ReimbursementAmount
+        Meaning: The single reimbursement amount in this application
+        Source: Problem Instance
+        Domain/Type: Positive real number (unit: yuan)
+
+Step 3: [Extract] Variable: VAR_AmountCeiling
+        Meaning: The maximum allowable single reimbursement amount as defined by the document
+        Source: Document (fixed value)
+        Domain/Type: Positive real number (unit: yuan)
+
+Step 4: [Extract] Variable: VAR_InvoiceStatus
+        Meaning: Whether the applicant has attached an original invoice
+        Source: Problem Instance
+        Domain/Type: Boolean (Attached / Not Attached)
+
+Step 5: [Judge] Intermediate Conclusion: MID_ApprovalCondition
+        Inference Logic: If VAR_ApprovalStatus = Signed → condition passed; otherwise → failed
+        Depends On: VAR_ApprovalStatus
+
+Step 6: [Judge] Intermediate Conclusion: MID_AmountCondition
+        Inference Logic: If VAR_ReimbursementAmount ≤ VAR_AmountCeiling → condition passed;
+                         otherwise → failed
+        Depends On: VAR_ReimbursementAmount, VAR_AmountCeiling
+
+Step 7: [Judge] Intermediate Conclusion: MID_InvoiceCondition
+        Inference Logic: If VAR_InvoiceStatus = Attached → condition passed; otherwise → failed
+        Depends On: VAR_InvoiceStatus
+
+Step 8: [Conclude] Final Answer: ANS_ReimbursementEligibility
+        Synthesis Logic: If and only if MID_ApprovalCondition, MID_AmountCondition, and
+                         MID_InvoiceCondition all pass → approved; if any one fails → rejected,
+                         with specification of which condition(s) were not met
+        Depends On: MID_ApprovalCondition, MID_AmountCondition, MID_InvoiceCondition
+        Answer Form: (Approved / Rejected) + reason explanation
+        Fallback Rule: If any required information is missing from the problem instance
+                       (e.g., no mention of invoice status), output "Insufficient information
+                       — unable to determine" and specify which item is missing
+
+## Variable Dependency Graph
+VAR_ApprovalStatus ──────────────→ MID_ApprovalCondition ──┐
+VAR_ReimbursementAmount ──┐                                │
+                          ├────────→ MID_AmountCondition ──┼──→ ANS_ReimbursementEligibility
+VAR_AmountCeiling ────────┘                                │
+VAR_InvoiceStatus ───────────────→ MID_InvoiceCondition ───┘
+
+---
+
+Now, please generate the reasoning framework based on the following input:
+
+[DOC]: {DOC}
+
+[Q]: {Q}
